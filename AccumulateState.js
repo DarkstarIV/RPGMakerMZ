@@ -35,31 +35,31 @@
  *
  * @param GaugeImage
  * @text ゲージ画像ファイル
- * @desc ゲージ表示に使用する画像ファイル(img/pictures)です。空のゲージと満タンのゲージを縦に並べて一つの画像にしてください。
+ * @desc Image files (img/pictures) to be used for gauge display. The empty and full gauges should be lined up vertically in a single image.
  * @default
  * @dir img/pictures/
  * @type file
  *
  * @param GaugeSwitchId
- * @text ゲージ表示スイッチ
- * @desc 有効にすると指定したスイッチがONのときだけゲージ表示されます。
+ * @text gauge indication switch
+ * @desc When enabled, the gauge is displayed only when the specified switch is ON.
  * @default 0
  * @type switch
  *
  * @param AccumulateFormula
- * @text 蓄積率計算式
- * @desc 蓄積率を算出する計算式を効果の「ステート付加」および対象の「ステート有効度」から独自作成します。
+ * @text Accumulation Rate Formula
+ * @desc Create your own formula to calculate the accumulation rate from the effect “State Addition” and the target “State Effectiveness”.
  * @default
  *
  * @param LuckAdjust
- * @text 運補正
- * @desc ONにすると蓄積率に対して運による補正を掛けます。（デフォルト仕様準拠）
+ * @text Luck Correction
+ * @desc When turned on, the accumulation rate is corrected by luck. (Conforms to default specification)
  * @default true
  * @type boolean
  *
  * @param CertainHit
- * @text 必中時有効度無視
- * @desc ONにすると必中スキルに関しては「ステート付加」の値がそのまま蓄積率に反映されます。
+ * @text Effectiveness is ignored when a hit is certain
+ * @desc When turned ON, the value of “State Addition” is directly reflected in the accumulation rate for must-have skills.
  * @default true
  * @type boolean
  *
