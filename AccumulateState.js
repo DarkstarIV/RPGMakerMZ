@@ -64,97 +64,97 @@
  * @type boolean
  *
  * @param ImmunityRate
- * @text 免疫率
- * @desc ステートが有効になるごとに加算される耐性値です。100になると一切、上昇しなくなります。
+ * @text Immunity Rate
+ * @desc The resistance value each time a state is activated. Once it hits 100, the state won't activate again.
  * @default 0
  * @type number
  *
  * @param ResetAccumulateEndBattle
- * @text 戦闘終了時にリセット
- * @desc 蓄積ステートの解除条件「戦闘終了時に解除」が有効な場合、戦闘終了時に蓄積率をリセットします。
+ * @text Reset at the end of battle
+ * @desc If this value is set to true, then the accumlated stacks will reset at the end of battle.
  * @default false
  * @type boolean
  *
  * @command ACCUMULATE
- * @text 蓄積
- * @desc 指定したアクターのステート蓄積量を増減します。
+ * @text Accumulate
+ * @desc Increases or decreases the accumulation rate for the specified actor.
  *
  * @arg actorId
- * @text アクターID
- * @desc 対象のアクターIDです。敵キャラを対象にする場合は0のままでOKです。
+ * @text Actor ID
+ * @desc Targeting actor ID. If targeting an enemy, leave at 0.
  * @default 0
  * @type actor
  *
  * @arg enemyIndex
- * @text 敵キャラインデックス
- * @desc 対象の敵キャラインデックスです。アクターを対象にする場合は-1のままでOKです。
+ * @text Enemy Character Index
+ * @desc Target enemy character index. If targeting an actor, leave at -1.
  * @default -1
  * @type number
  * @min -1
  *
  * @arg stateId
- * @text ステートID
- * @desc 対象のステートIDです。蓄積型のステートを指定してください。
+ * @text State ID
+ * @desc Target State ID. Specify the ID of the state.
  * @default 1
  * @type state
  *
  * @arg rate
- * @text 蓄積率
- * @desc 蓄積率(-100% ～ 100%)です。
+ * @text Accumulation Rate
+ * @desc Accumulation rate (-100% to 100%).
  * @default 0
  * @type number
  * @min -100
  * @max 100
  *
- * @help 特定のステートを蓄積型に変更します。
- * 蓄積型のステートにしたい場合、メモ欄に以下の通り設定してください。
+ * @help Changes a specific state to accumulating type.
+ * If you want to make the state accumulative, set the following in the memo field
  * <蓄積型>
  * <Accumulate>
  *
- * 蓄積型ステートは使用効果「ステート付加」によって値が蓄積していき、
- * 蓄積率が100%(=1.0)を超えると対象のステートが有効になります。
- * 計算式は以下の通りです。
+ * Accumulated State Values according to state addition.
+ * When the accumulation rate exceeds 100% (=1.0), the target state becomes effective.
+ * The formula is as follows
  *
- * 効果「ステート付加」の設定値 * 対象の「ステートの有効度」 = 蓄積率
- * 例：効果の「ステート付加」が80%(0.8)で、対象のステート有効度が50%(0.5)の場合
- * 0.8 * 0.5 = 0.4         # 蓄積率は40%(0.4)
+ * Effect “Add State” * Target's “State Availability” = Accumulation Rate
+ * Example: If the effect “State Addition” is 80% (0.8) and the target's State Effectiveness is 50% (0.5)
+ * 0.8 * 0.5 = 0.4 # Accumulation rate is 40% (0.4)
  *
- * さらに上級者向け機能として蓄積率計算式を別途指定できます。
- * 計算式では以下の変数が使用できます。
+ * In addition, a separate accumulation rate calculation formula can be specified as a function for advanced users.
+ * The following variables can be used in the formula
  *
- * a : 効果の「ステート付加」の設定値
- * b : 対象の「ステート有効度」の設定値
+ * a : Setting value of the effect “State Addition”.
+ * b : Target “State Validity” setting value
  *
- * 蓄積率計算式の指定例
+ * Example of specifying an accumulation rate calculation formula
  * a - (1.0 - b)
  *
- * 例：効果の「ステート付加」が80%(0.8)で、対象のステート有効度が50%(0.5)の場合
- * 0.8 - (1.0 - 0.5) = 0.3  # 蓄積率は30%(0.3)
+ * Example: If the effect “State Addition” is 80% (0.8) and the target's State Effectiveness is 50% (0.5)
+ * 0.8 - (1.0 - 0.5) = 0.3 # Accumulation rate is 30% (0.3)
  *
- * 蓄積率が負の値になった場合は「0」として計算されます。実行時にブザーが鳴る場合、
- * スクリプトの記述に問題があります。
- * F8を押下してデベロッパツールを開き、内容を確認してください。
+ * If the accumulation rate is negative, it is calculated as “0”. If a buzzer sounds during execution,
+ * There is a problem with the script description.
+ * Press F8 to open the Developer Tools and review the contents.
  *
- * また、「ステート解除」によって蓄積率がリセットされます。
+ * In addition, the accumulation rate is reset by “state release”.
  *
- * ステートをひとつだけ指定して戦闘画面にゲージとして表示することができます。
- * この機能を使う場合は、アクターのメモ欄に以下の通り設定してください。
- * <蓄積ゲージステート:3> // 蓄積型のステートID「3」をゲージとして表示します。
- * <蓄積ゲージX:600>      // ゲージのX座標です。
- * <蓄積ゲージY:400>      // ゲージのY座標です。
+ * Only one state can be specified and displayed as a gauge on the battle screen.
+ * To use this feature, set the following in the actor's notes field.
+ * <Storage Gauge State:3> // Display the accumulating state ID “3” as a gauge.
+ * <Storage Gauge X:600> // X coordinate of the gauge.
+ * <Storage Gauge Y:400> // Y coordinate of the gauge.
  *
- * マップ画面、ステータス画面にゲージを表示したい場合は座標を指定してください。
- * <蓄積マップゲージX:600> // マップ画面のゲージのX座標です。
- * <蓄積マップゲージY:400> // マップ画面のゲージのY座標です。
- * <蓄積ステータスゲージX:600> // ステータス画面のゲージのX座標です。
- * <蓄積ステータスゲージY:400> // ステータス画面のゲージのY座標です。
+ * If you want to display the gauge on the map screen or status screen, specify the coordinates.
+ * <accumulated map gauge X:600> // X coordinate of the gauge on the map screen.
+ * <stored map gauge Y:400> // Y coordinate of the gauge on the map screen.
+ * <Stored Status Gauge X:600> // X coordinate of the gauge on the status screen.
+ * <Stored Status Gauge Y:400> // Y coordinate of the gauge on the status screen.
  *
- * ゲージ画像はパラメータで指定したものを使用します。
+ * The gauge image is the one specified by the parameter.
  *
- * 利用規約：
- *  作者に無断で改変、再配布が可能で、利用形態（商用、18禁利用等）
- *  についても制限はありません。
- *  このプラグインはもうあなたのものです。
+ * Terms of Use:
+ * You may modify and redistribute the materials without permission of the author, and there are no restrictions on the form of use (commercial, 18-restricted use, etc.).
+ * No restrictions on the type of use (commercial, 18-content use, etc.).
+ * This plugin is now yours.
  */
 
 (()=>{
@@ -175,7 +175,7 @@
 
     //=============================================================================
     // Game_BattlerBase
-    //  ステート蓄積量を管理します。
+    //  Manage the amount of state accumulation.
     //=============================================================================
     Game_BattlerBase.prototype.clearStateAccumulationsIfNeed = function () {
         if (!this._stateAccumulations) {
@@ -262,7 +262,7 @@
     };
 
     Game_BattlerBase.prototype.getGaugeStateId = function () {
-        return this.getGaugeInfo(['蓄積ゲージステート', 'AccumulateGaugeState']);
+        return this.getGaugeInfo(['Stored Gauge State', 'AccumulateGaugeState']);
     };
 
     Game_BattlerBase.prototype.getGaugeInfo = function (names) {
@@ -297,27 +297,27 @@
 
     SceneManager.findAccumulateGaugeTagX = function() {
         if (this._scene instanceof Scene_Map) {
-            return ['蓄積マップゲージX', 'AccumulateMapGaugeX'];
+            return ['Accumulation Map Gauge X', 'AccumulateMapGaugeX'];
         }
         if (this._scene instanceof Scene_Status) {
-            return ['蓄積ステータスゲージX', 'AccumulateStatusGaugeX'];
+            return ['Accumulated Status Gauge X', 'AccumulateStatusGaugeX'];
         }
-        return ['蓄積ゲージX', 'AccumulateGaugeX'];
+        return ['Accumulation Gauge X', 'AccumulateGaugeX'];
     };
 
     SceneManager.findAccumulateGaugeTagY = function() {
         if (this._scene instanceof Scene_Map) {
-            return ['蓄積マップゲージY', 'AccumulateMapGaugeY'];
+            return ['Accumulated map gauge Y', 'AccumulateMapGaugeY'];
         }
         if (this._scene instanceof Scene_Status) {
-            return ['蓄積ステータスゲージY', 'AccumulateStatusGaugeY'];
+            return ['Accumulated Status Gauge Y', 'AccumulateStatusGaugeY'];
         }
-        return ['蓄積ゲージY', 'AccumulateGaugeY'];
+        return ['Accumulation gauge Y', 'AccumulateGaugeY'];
     };
 
     //=============================================================================
     // Game_Action
-    //  行動によってステート蓄積量を増やします。
+    //  Increases state accumulation by action.
     //=============================================================================
     const _Game_Action_itemEffectAddAttackState = Game_Action.prototype.itemEffectAddAttackState;
     Game_Action.prototype.itemEffectAddAttackState = function (target, effect) {
@@ -367,15 +367,15 @@
 
     //=============================================================================
     // BattleManager
-    //  蓄積型のステートかどうかを判定します。
+    //  Determines if the state is a storing type state.
     //=============================================================================
     BattleManager.isStateAccumulate = function (stateId) {
-        return stateId > 0 && !!PluginManagerEx.findMetaValue($dataStates[stateId], ['蓄積型', 'Accumulate']);
+        return stateId > 0 && !!PluginManagerEx.findMetaValue($dataStates[stateId], ['accumulator', 'Accumulate']);
     };
 
     //=============================================================================
     // Scene_Base
-    //  ステートゲージを作成します。
+    //  Create a state gauge.
     //=============================================================================
     Scene_Battle.prototype.createAccumulateState = function (detailMenu) {
         Scene_Base.prototype.createAccumulateState.call(this, detailMenu);
@@ -412,7 +412,7 @@
 
     //=============================================================================
     // Sprite_AccumulateState
-    //  ステート蓄積表示用スプライトです。
+    //  This is a sprite for displaying state accumulation.
     //=============================================================================
     function Sprite_AccumulateState() {
         this.initialize.apply(this, arguments);
