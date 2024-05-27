@@ -26,7 +26,7 @@
 //=============================================================================
 
 /*:
- * @plugindesc 蓄積型ステートプラグイン
+ * @plugindesc Stored State Plug-in
  * @target MZ
  * @url https://github.com/triacontane/RPGMakerMV/tree/mz_master/AccumulateState.js
  * @base PluginCommonBase
@@ -34,7 +34,7 @@
  * @author トリアコンタン
  *
  * @param GaugeImage
- * @text ゲージ画像ファイル
+ * @text gauge image file
  * @desc Image files (img/pictures) to be used for gauge display. The empty and full gauges should be lined up vertically in a single image.
  * @default
  * @dir img/pictures/
